@@ -1,15 +1,21 @@
-#spring.application.name : ensitech
 spring:
   application:
     name: ensitech
   profiles:
     active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3307/ensitech
+    username: admin
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     open-in-view: false
-  flyway:
-    enabled: true
-    locations: classpath:db/migration
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
+server:
+  port: 8084

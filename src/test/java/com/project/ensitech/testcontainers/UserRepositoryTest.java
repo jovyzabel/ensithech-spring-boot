@@ -41,7 +41,7 @@ public class UserRepositoryTest {
         User saved = userRepository.save(u);
 
         assertThat(saved.getId()).isNotNull();
-        assertThat(saved.getNom()).isEqualTo("Jean Dupont");
+        assertThat(saved.getName()).isEqualTo("Jean Dupont");
     }
 }
 
