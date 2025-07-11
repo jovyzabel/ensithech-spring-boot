@@ -1,0 +1,22 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  # Les propriétés datasource sont configurées dynamiquement par TestContainers
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  flyway:
+    enabled: false
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.jdbc.core: DEBUG
+    org.testcontainers: INFO
