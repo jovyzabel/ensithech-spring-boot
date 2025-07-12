@@ -13,8 +13,10 @@ Il est préferable de nommer les branches liées aux fonctionnalités en commen�
 e.g: git checkout -b **feature/create-student** : pour la fonctionnalité créer un etudiant.
 
 #### Push 
-Le push se fait sur la branche develop
-e.g : git push -u origin develop
-git push -u origin feature/create-student
+    Une fois dans la branche feature/create-student par exemple.
+    la commande pour faire un push est:
+    git push -u origin feature/create-student
+
+
 
 
