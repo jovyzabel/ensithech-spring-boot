@@ -40,6 +40,7 @@ src/main/resources/application-prod.yml
 init.*
 
 docker/.env
+docker/docker/*
 docker/mysql
 /docker/docker/mysql/init.sql
 docker/docker/mysql/
