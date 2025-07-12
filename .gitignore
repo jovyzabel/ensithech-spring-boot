@@ -37,9 +37,12 @@ src/main/resources/application-test.yml
 src/main/resources/application-prod.yml
 
 .env
+init.*
+
 docker/.env
 docker/mysql
-docker/docker/mysql
+/docker/docker/mysql/init.sql
+docker/docker/mysql/
 
 src/main/resources/db
 
