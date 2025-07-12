@@ -33,6 +33,13 @@ build/
 .vscode/
 
 src/main/resources/application.yml
-src/main/resources/application-dev.yml
 src/main/resources/application-test.yml
 src/main/resources/application-prod.yml.yml
+
+.env
+docker/.env
+docker/mysql
+docker/docker/mysql
+
+src/main/resources/db
+
