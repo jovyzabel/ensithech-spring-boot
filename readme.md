@@ -2,7 +2,7 @@
 
 ## Règles
 ### Nommage 
-    Il est préferable de nommer Les classes, interfaces, enumerations et des dossiers en utlisant la langue anglaise.
+    Il est préferable de nommer Les classes, interfaces, enumerations et les dossiers en utlisant la langue anglaise.
     Exemple : StudentService.java.
 
 ### Branches
