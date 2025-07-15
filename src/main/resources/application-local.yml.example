@@ -1,0 +1,39 @@
+# src/main/resources/application-local.yml
+
+# Configuration spécifique au serveur
+server:
+  port: 8084 # Le port sur lequel l'application va tourner
+
+# Configuration Spring
+spring:
+  # Configuration de la source de données (DataSource)
+  datasource:
+    # URL de connexion à votre base de données MySQL locale.
+    # 'ensitech' est le nom de la base de données. Vous devez la créer dans MySQL Workbench.
+    url: jdbc:mysql://localhost:3306/ensitech?createDatabaseIfNotExist=true # Ajouté pour créer la BDD si elle n'existe pas
+    username: VOTRE_USER_MYSQL root # Votre nom d'utilisateur MySQL (souvent 'root' par défaut)
+    password: VOTRE_MOT_DE_PASSE_MYSQL # !! METTEZ VOTRE VRAI MOT DE PASSE ICI !!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # Configuration de JPA (Java Persistence API) et Hibernate
+  jpa:
+    # Configuration spécifique à Hibernate, l'implémentation de JPA que nous utilisons
+    hibernate:
+      # ddl-auto: 'update' est très pratique en développement.
+      # Hibernate va comparer vos entités (@Entity) avec les tables de la BDD
+      # et les mettre à jour automatiquement au démarrage (ajouter des colonnes, etc.).
+      # Autres valeurs possibles : 'create' (détruit et recrée tout), 'validate', 'none'.
+      ddl-auto: update
+
+    # 'show-sql: true' va afficher dans la console toutes les requêtes SQL générées par Hibernate.
+    # C'est extrêmement utile pour déboguer et comprendre ce qui se passe.
+    show-sql: true
+    properties:
+      hibernate:
+        # 'format_sql: true' va indenter et formater joliment les requêtes SQL affichées,
+        # les rendant plus lisibles.
+        format_sql: true
+
+    # Laisser cette propriété vide permet à Hibernate de détecter automatiquement le bon dialecte
+    # pour MySQL, mais le spécifier est plus sûr.
+    database-platform: org.hibernate.dialect.MySQLDialect
