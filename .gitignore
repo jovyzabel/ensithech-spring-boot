@@ -60,3 +60,7 @@ docker/docker/mysql/
 
 src/main/resources/db
 
+
+*.properties
+dbConfig.yml
+
