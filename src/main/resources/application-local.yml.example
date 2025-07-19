@@ -11,8 +11,8 @@ spring:
     # URL de connexion à votre base de données MySQL locale.
     # 'ensitech' est le nom de la base de données. Vous devez la créer dans MySQL Workbench.
     url: jdbc:mysql://localhost:3306/ensitech?createDatabaseIfNotExist=true # Ajouté pour créer la BDD si elle n'existe pas
-    username: VOTRE_USER_MYSQL root # Votre nom d'utilisateur MySQL (souvent 'root' par défaut)
-    password: VOTRE_MOT_DE_PASSE_MYSQL # !! METTEZ VOTRE VRAI MOT DE PASSE ICI !!
+    username: MYSQL_USER Votre nom d'utilisateur MySQL (souvent 'root' par défaut)
+    password: MYSQL_PASSWORD # !! METTEZ VOTRE VRAI MOT DE PASSE ICI !!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   # Configuration de JPA (Java Persistence API) et Hibernate
