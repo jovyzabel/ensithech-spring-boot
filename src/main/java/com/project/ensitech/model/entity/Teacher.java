@@ -23,9 +23,9 @@ import java.util.Set; // On utilise un Set pour les relations pour éviter les d
 public class Teacher extends Person {
     @Temporal(TemporalType.TIMESTAMP) // Ici on veut la date et l'heure de création.
     private Date createdAt;
-    // --- Préparation pour le futur : Associer des cours ---
-    // Un enseignant (One) peut enseigner plusieurs cours (Many).
-    // 'mappedBy = "teacher"' indique que l'entité Course gère la relation (elle aura un champ 'teacher').
-    // @OneToMany(mappedBy = "teacher")
-    // private Set<Course> courses;
+    /* --- Préparation pour le futur : Associer des cours ---
+     Un enseignant (One) peut enseigner plusieurs cours (Many).
+    'mappedBy = "teacher"' indique que l'entité Course gère la relation (elle aura un champ 'teacher').*/
+     @OneToMany(mappedBy = "teacher")
+    private Set<Course> courses;
 }
