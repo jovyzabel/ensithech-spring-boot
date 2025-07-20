@@ -20,29 +20,29 @@ public class TeacherController {
 
     // POST /api/teachers -> Créer un enseignant
     @PostMapping
-    public ResponseEntity<Teacher> createTeacher(@RequestBody TeacherDto dto) {
-        Teacher newTeacher = teacherService.createTeacher(dto);
+    public ResponseEntity<TeacherDto> createTeacher(@RequestBody TeacherDto dto) {
+        TeacherDto newTeacher = teacherService.createTeacher(dto);
         // On retourne l'objet créé et un statut HTTP 201 (Created).
         return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
     }
 
     // GET /api/teachers -> Lister tous les enseignants
     @GetMapping
-    public ResponseEntity<List<Teacher>> getAllTeachers() {
-        List<Teacher> teachers = teacherService.getAllTeachers();
+    public ResponseEntity<List<TeacherDto>> getAllTeachers() {
+        List<TeacherDto> teachers = teacherService.getAllTeachers();
         return ResponseEntity.ok(teachers); // Retourne la liste et un statut 200 (OK).
     }
     // GET /api/teachers/1 -> Lire un enseignant par son ID
     @GetMapping("/{id}")
-    public ResponseEntity<Teacher> getTeacherById(@PathVariable Long id) {
-        Teacher teacher = teacherService.getTeacherById(id);
-        return ResponseEntity.ok(teacher);
+    public ResponseEntity<TeacherDto> getTeacherById(@PathVariable Long id) {
+        TeacherDto teacherDto = teacherService.getTeacherById(id);
+        return ResponseEntity.ok(teacherDto);
     }
 
     // PUT /api/teachers/1 -> Modifier un enseignant par son ID
     @PutMapping("/{id}")
-    public ResponseEntity<Teacher> updateTeacher(@PathVariable Long id, @RequestBody TeacherDto dto) {
-        Teacher updatedTeacher = teacherService.updateTeacher(id, dto);
+    public ResponseEntity<TeacherDto> updateTeacher(@PathVariable Long id, @RequestBody TeacherDto dto) {
+        TeacherDto updatedTeacher = teacherService.updateTeacher(id, dto);
         return ResponseEntity.ok(updatedTeacher);
     }
 
