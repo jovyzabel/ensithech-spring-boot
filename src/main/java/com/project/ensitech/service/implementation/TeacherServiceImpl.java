@@ -1,6 +1,7 @@
 package com.project.ensitech.service.implementation;
 
 
+import com.project.ensitech.exception.ResourceNotFoundException;
 import com.project.ensitech.model.dto.TeacherDto;
 import com.project.ensitech.model.entity.Teacher;
 import com.project.ensitech.repository.PersonRepository;
@@ -9,13 +10,25 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.project.ensitech.service.mapper.TeacherMapper; // <-- IMPORTER LE MAPPER
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor // Injection de dépendances via le constructeur, gérée par Lombok. C'est moderne et propre.
 public class TeacherServiceImpl implements ITeacherService {
+
+    // Initialisation du logger pour cette classe en utilisant Log4j2
+    private static final Logger log = LogManager.getLogger(TeacherServiceImpl.class);
+
     private final PersonRepository personRepository;
+    private final TeacherMapper teacherMapper; // <-- INJECTER LE MAPPER
+
     /**
      * Crée un nouvel enseignant à partir des données d'un DTO.
      *
@@ -23,24 +36,20 @@ public class TeacherServiceImpl implements ITeacherService {
      * @return L'entité Teacher qui a été sauvegardée.
      */
     @Override
-    public Teacher createTeacher(TeacherDto dto) {
-        // Crée une nouvelle instance de l'entité Teacher
-        Teacher teacher = new Teacher();
+    @Transactional // Les opérations d'écriture doivent être transactionnelles
+    public TeacherDto createTeacher(TeacherDto dto) {
 
-        // Mappe les données du DTO vers l'entité
-        teacher.setFirstName(dto.getFirstName());
-        teacher.setLastName(dto.getLastName());
-        teacher.setEmail(dto.getEmail());
-        teacher.setAddress(dto.getAddress());
-        teacher.setTelephone(dto.getTelephone());
-        teacher.setBirthday(dto.getBirthday());
-        teacher.setGender(dto.getGender()); // Ne pas oublier le genre !
+        log.info("Tentative de création d'un nouveau enseignant avec email: {}", dto.getEmail());
 
-        // Définit la date de création côté serveur pour garantir sa validité
+        // 1. Traduire le DTO en Entité
+        Teacher teacher = teacherMapper.toEntity(dto);
         teacher.setCreatedAt(new Date());
 
-        // Sauvegarde l'entité en base de données via le repository et la retourne.
-        return personRepository.save(teacher);
+        // 2. Sauvegarder l'entité
+        Teacher savedTeacher = personRepository.save(teacher);
+        log.info("Enseignant créer avec succès avec ID: {}", savedTeacher.getId());
+        // 3. Traduire l'entité sauvegardée en DTO pour la réponse
+        return teacherMapper.toDto(savedTeacher);
     }
 
     /**
@@ -49,9 +58,14 @@ public class TeacherServiceImpl implements ITeacherService {
      * @return une liste d'entités Teacher.
      */
     @Override
-    public List<Teacher> getAllTeachers() {
-        // Appelle la méthode optimisée du repository.
-        return personRepository.findAllTeachers();
+    @Transactional(readOnly = true) // Transaction en lecture seule, c'est optimisé !
+    public List<TeacherDto> getAllTeachers() {
+        log.info(" Recupération de tous les enseignants de la base de donnée.");
+        List<Teacher> teachers = personRepository.findAllTeachers();
+        log.info("Trouvé {} enseignants.", teachers.size());
+        // Le mapping se fait ici, PENDANT que la transaction est ouverte.
+        // C'est ce qui résout la LazyInitializationException !
+        return teacherMapper.toDtoList(teachers);
     }
 
     /**
@@ -62,11 +76,16 @@ public class TeacherServiceImpl implements ITeacherService {
      * @throws RuntimeException si aucun enseignant n'est trouvé avec cet ID.
      */
     @Override
-    public Teacher getTeacherById(Long id) {
-        // Utilise la méthode spécifique pour trouver un Teacher.
-        // .orElseThrow() est une manière élégante de gérer le cas où l'entité n'est pas trouvée.
-        return personRepository.findTeacherById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id: " + id));
+    @Transactional(readOnly = true)
+    public TeacherDto getTeacherById(Long id) {
+        log.info("Recupération de l'enseignant avec ID: {}", id);
+        Teacher teacher = personRepository.findTeacherById(id)
+                .orElseThrow(() -> {
+                    // On log l'échec avant de lancer l'exception
+                    log.warn("Enseignant non trouvé avec l'identifiant ID: {}", id);
+                    return new ResourceNotFoundException("Enseignant non trouvé avec l'identifiant : " + id);
+                });
+        return teacherMapper.toDto(teacher);
     }
 
     /**
@@ -77,11 +96,16 @@ public class TeacherServiceImpl implements ITeacherService {
      * @return L'entité Teacher mise à jour.
      */
     @Override
-    public Teacher updateTeacher(Long id, TeacherDto dto) {
-        // 1. On récupère l'enseignant existant. Si non trouvé, une exception sera levée.
-        Teacher existingTeacher = getTeacherById(id);
+    @Transactional
+    public TeacherDto updateTeacher(Long id, TeacherDto dto) {
+        log.info(" Tentative de mise à jour de l'enseignant avec ID: {}", id);
+        Teacher existingTeacher = personRepository.findTeacherById(id)
+                .orElseThrow(() ->  {
+                    log.warn("Mise à jour échouée. Enseignant non trouvé avec ID: {}", id);
+                    return new ResourceNotFoundException("Enseignant non trouvé avec l'identifiant : " + id);
+                });
 
-        // 2. On met à jour ses champs avec les nouvelles données du DTO.
+        // Mise à jour (un mapper plus avancé pourrait le faire aussi)
         existingTeacher.setFirstName(dto.getFirstName());
         existingTeacher.setLastName(dto.getLastName());
         existingTeacher.setEmail(dto.getEmail());
@@ -90,9 +114,9 @@ public class TeacherServiceImpl implements ITeacherService {
         existingTeacher.setBirthday(dto.getBirthday());
         existingTeacher.setGender(dto.getGender());
 
-        // 3. On sauvegarde l'entité mise à jour. JPA est assez intelligent pour savoir
-        // qu'il doit faire un UPDATE SQL car l'entité a déjà un ID.
-        return personRepository.save(existingTeacher);
+        Teacher updatedTeacher = personRepository.save(existingTeacher);
+        log.info(" Mise à jour réussie de l'enseignant avec ID: {}", updatedTeacher.getId());
+        return teacherMapper.toDto(updatedTeacher);
     }
 
     /**
@@ -101,13 +125,22 @@ public class TeacherServiceImpl implements ITeacherService {
      * @param id L'identifiant de l'enseignant à supprimer.
      */
     @Override
+    @Transactional
     public void deleteTeacher(Long id) {
-        // 1. On vérifie d'abord si l'enseignant existe.
-        if (!personRepository.existsById(id)) {
-            throw new EntityNotFoundException("Cannot delete. Teacher not found with id: " + id);
-        }
-        // 2. On le supprime.
-        personRepository.deleteById(id);
+        log.info("Tentative de suppression de l'enseignant avec ID: {}", id);
 
+        // On essaie de trouver l'entité. Si elle n'existe pas,
+        // orElseThrow lèvera directement l'exception.
+
+        Teacher teacherToDelete = personRepository.findTeacherById(id)
+                .orElseThrow(() -> {
+                    log.warn("Suppression échouée. Enseignant non trouvé avec ID: {}", id);
+                    return new ResourceNotFoundException("Impossible de supprimer. Enseignant non trouvé avec l'identifiant : " + id);
+                });
+
+        // Si on arrive ici, l'enseignant existe. On peut le supprimer.
+        personRepository.delete(teacherToDelete); // Utiliser delete(entity) est souvent plus sûr.
+
+        log.info("Suppression avec succès de l'enseignant avec ID: {}", id);
     }
 }
