@@ -20,7 +20,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@AllArgsConstructor
+
 @NoArgsConstructor
 // L'annotation @Inheritance définit la stratégie. SINGLE_TABLE est efficace.
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -51,4 +51,17 @@ public abstract class Person implements Serializable {
   @Enumerated(EnumType.STRING) // Stocke l'énumération comme une chaîne ("MALE", "FEMALE") dans la BDD, c'est plus lisible.
   @Column(nullable = false)
   private Gender gender;
+
+
+  // CONSTRUCTEUR MANUEL NÉCESSAIRE POUR LA CLASSE FILLE (Teacher)
+  public Person(Long id, String firstName, String lastName, String email, String address, String telephone, Date birthday, Gender gender) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.address = address;
+    this.telephone = telephone;
+    this.birthday = birthday;
+    this.gender = gender;
+  }
 }

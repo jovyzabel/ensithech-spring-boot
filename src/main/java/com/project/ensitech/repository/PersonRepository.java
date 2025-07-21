@@ -14,14 +14,10 @@ import java.util.Optional;
 // Il pourra donc gérer les Person, Teacher, Student, etc.
 public interface PersonRepository extends JpaRepository<Person, Long>{
     /**
-     * Utilise une requête JPQL (Java Persistence Query Language) pour sélectionner
-     * spécifiquement les entités de type Teacher. C'est beaucoup plus performant
-     * que de tout récupérer et de filtrer en Java.
-     * Hibernate traduira "FROM Teacher" en "FROM person WHERE person_type = 1".
-     *
-     * @return Une liste de tous les enseignants.
+     * Utilise une requête JPQL avec un CONSTRUCTEUR pour s'assurer que tous les champs,
+     * y compris l'ID hérité, sont correctement chargés.
      */
-    @Query("SELECT t FROM Teacher t")
+    @Query("SELECT new com.project.ensitech.model.entity.Teacher(t.id, t.firstName, t.lastName, t.email, t.address, t.telephone, t.birthday, t.gender, t.createdAt) FROM Teacher t")
     List<Teacher> findAllTeachers();
 
     /**

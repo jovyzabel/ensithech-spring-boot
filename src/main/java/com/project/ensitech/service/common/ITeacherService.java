@@ -11,12 +11,12 @@ public interface ITeacherService {
      * @param dto Les informations du nouvel enseignant.
      * @return L'entité Teacher qui a été sauvegardée.
      */
-    Teacher createTeacher(TeacherDto dto);
+    TeacherDto createTeacher(TeacherDto dto);
     /**
      * Récupère la liste de tous les enseignants.
      * @return une liste d'entités Teacher.
      */
-    List<Teacher> getAllTeachers();
+    List<TeacherDto> getAllTeachers();
 
     /**
      * Récupère un enseignant par son identifiant.
@@ -24,7 +24,7 @@ public interface ITeacherService {
      * @return L'enseignant trouvé.
      * @throws RuntimeException si aucun enseignant n'est trouvé avec cet ID.
      */
-    Teacher getTeacherById(Long id);
+    TeacherDto getTeacherById(Long id);
 
     /**
      * Met à jour les informations d'un enseignant existant.
@@ -32,7 +32,7 @@ public interface ITeacherService {
      * @param dto Les nouvelles informations.
      * @return L'entité Teacher mise à jour.
      */
-    Teacher updateTeacher(Long id, TeacherDto dto);
+    TeacherDto updateTeacher(Long id, TeacherDto dto);
 
     /**
      * Supprime un enseignant par son identifiant.

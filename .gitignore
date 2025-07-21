@@ -1,66 +1,51 @@
-HELP.md
+# ===============================================
+# Fichiers de Log et de Build
+# ===============================================
 
-# Fichiers générés par le build Maven
+# Fichiers de log générés par Log4j2 ou d'autres loggers
+logs/
+*.log
+*.log.gz
 
+# Dossier de build Maven
 target/
-.mvn/wrapper/maven-wrapper.jar
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
-.apt_generated
+# Fichiers générés par le wrapper Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# ===============================================
+# Fichiers générés par les IDEs
+# ===============================================
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Visual Studio Code
+.vscode/
+
+# Eclipse / STS
 .classpath
-.factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+# ===============================================
+# Fichiers de configuration sensibles ou locaux
+# ===============================================
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Fichier de configuration local spécifique à une machine.
+# Il est préférable de commiter un fichier d'exemple à la place.
+application-local.yml
 
-### VS Code ###
-.vscode/
-
-
-src/main/resources/application-prod.yml
-src/main/resources/application-local.yml
-
+# Fichiers d'environnement
 .env
-init.*
-
 
 # ===============================================
-# Section pour Docker
-docker/.env
-docker/docker/*
-docker/mysql
-/docker/docker/mysql/init.sql
-docker/docker/mysql/
-
-src/main/resources/db
-
-
-*.properties
-dbConfig.yml
-
+# Fichiers système d'exploitation
+# ===============================================
+.DS_Store
+Thumbs.db

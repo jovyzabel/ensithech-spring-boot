@@ -26,4 +26,8 @@ public class Course {
 
     @NotNull(message = "Le nombre d'heure du cours est obligatoire")
     private Integer nombreHeures;
+
+    @ManyToOne
+    @JoinColumn(name="teacher_id", nullable=false)
+    private Teacher teacher;
 }
