@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@RestController
-@RequestMapping("/api/cours")
+@RestController //This class handles HTTP requests.
+@RequestMapping("/api/cours") //All endpoints start with this base path.
 @RequiredArgsConstructor
 public class CourseController {
     private final ICourseService iCourseService;
 
     @PostMapping
-    public ResponseEntity<CourseDto> create(@Valid @RequestBody CourseDto dto) {
+    public ResponseEntity<CourseDto> create(@Valid @RequestBody CourseDto dto) { //@RequestBody: Accept JSON input in POST requests. @Valid:  trigger validation on the CourseDto object that is passed in the request body.
        // System.out.println("ddd Controller"+ dto.toString());
         CourseDto created = iCourseService.createCourse( dto);
         // return ResponseEntity.ok(iCourseService.createCourse(dto));
@@ -28,7 +28,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseDto> get(@PathVariable Long id) {
+    public ResponseEntity<CourseDto> get(@PathVariable Long id) {//@PathVariable: Extract ID from the URL.
         return ResponseEntity.ok(iCourseService.getCourse(id));
     }
 
