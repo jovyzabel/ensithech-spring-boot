@@ -15,4 +15,6 @@ public class CourseDto {
     private String intitule;
     private Integer coefficient;
     private Integer nombreHeures;
+    private Long teacherId;
+    // private TeacherDto teacher;
 }

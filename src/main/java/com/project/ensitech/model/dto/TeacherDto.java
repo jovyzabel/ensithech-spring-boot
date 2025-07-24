@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data  // Génère getters, setters, toString, equals, hashCode
@@ -21,5 +22,10 @@ public class TeacherDto {
     private String telephone;
     private Date birthday;
     private Gender gender;
+    private List<CourseDto> courses;  // Liste des cours associés
+
+    // Contructeur utiliser pour afficher l'enseignat associé à un cours
+    public TeacherDto(Long id, String firstName, String lastName) {
+    }
     // Le champ 'createdAt' n'est pas dans le DTO car il est géré par le serveur.
 }

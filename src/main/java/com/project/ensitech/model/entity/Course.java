@@ -1,5 +1,6 @@
 package com.project.ensitech.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +28,11 @@ public class Course {
     @NotNull(message = "Le nombre d'heure du cours est obligatoire")
     private Integer nombreHeures;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name="teacher_id", nullable=false)
-    private Teacher teacher;
+    private Teacher teacher;*/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "teacher_id", nullable = true) // Clé étrangère dans la table Cours
+    // @JsonBackReference
+    private Teacher teacher;  // Chaque cours appartient à un enseignant
 }

@@ -61,7 +61,8 @@ public class TeacherServiceImpl implements ITeacherService {
     @Transactional(readOnly = true) // Transaction en lecture seule, c'est optimisé !
     public List<TeacherDto> getAllTeachers() {
         log.info(" Recupération de tous les enseignants de la base de donnée.");
-        List<Teacher> teachers = personRepository.findAllTeachers();
+        // List<Teacher> teachers = personRepository.findAllTeachers();
+        List<Teacher> teachers = personRepository.findAllTeachersWithCourses();
         log.info("Trouvé {} enseignants.", teachers.size());
         // Le mapping se fait ici, PENDANT que la transaction est ouverte.
         // C'est ce qui résout la LazyInitializationException !
@@ -142,5 +143,18 @@ public class TeacherServiceImpl implements ITeacherService {
         personRepository.delete(teacherToDelete); // Utiliser delete(entity) est souvent plus sûr.
 
         log.info("Suppression avec succès de l'enseignant avec ID: {}", id);
+    }
+
+    @Override
+    public TeacherDto getTeacherByCourseId(Long courseId) {
+       /* Teacher teacher = personRepository.findTeacherWithCoursesByCourseId(courseId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No teacher found for course with id: " + courseId
+                ));
+
+        return teacherMapper.toDto(teacher); */
+        return personRepository.findTeacherWithCoursesByCourseId(courseId)
+                .map(teacherMapper::toDto)
+                .orElse(new TeacherDto()); // Return an empty TeacherDto if no teacher is found
     }
 }

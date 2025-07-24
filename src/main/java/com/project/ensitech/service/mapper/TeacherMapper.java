@@ -26,7 +26,7 @@ public interface TeacherMapper {
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "courses", ignore = true)
+   @Mapping(target = "courses", ignore = true)  // On ignore la liste des cours en entrée car la création ou la mise à jour d’un Teacher ne doit pas inclure directement la liste de cours
     Teacher toEntity(TeacherDto teacherDto);
 
     /**

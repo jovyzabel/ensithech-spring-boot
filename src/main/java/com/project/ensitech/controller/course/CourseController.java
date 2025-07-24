@@ -26,7 +26,17 @@ public class CourseController {
         CourseDto updated = iCourseService.updateCourse( courseDto);
         return ResponseEntity.ok(updated);
     }
-
+    /**
+     * Associer un enseignant existant à un cours existant
+     */
+    @PutMapping("/{courseId}/assign-teacher/{teacherId}")
+    public ResponseEntity<CourseDto> assignTeacher(
+            @PathVariable Long courseId,
+            @PathVariable Long teacherId
+    ) {
+        CourseDto updated = iCourseService.assignTeacherToCourse(courseId, teacherId);
+        return ResponseEntity.ok(updated);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<CourseDto> get(@PathVariable Long id) {//@PathVariable: Extract ID from the URL.
         return ResponseEntity.ok(iCourseService.getCourse(id));

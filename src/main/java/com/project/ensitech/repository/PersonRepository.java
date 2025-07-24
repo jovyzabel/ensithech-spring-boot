@@ -4,6 +4,7 @@ import com.project.ensitech.model.entity.Person;
 import com.project.ensitech.model.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
     @Query("SELECT new com.project.ensitech.model.entity.Teacher(t.id, t.firstName, t.lastName, t.email, t.address, t.telephone, t.birthday, t.gender, t.createdAt) FROM Teacher t")
     List<Teacher> findAllTeachers();
 
+    @Query("SELECT DISTINCT t FROM Teacher t LEFT JOIN FETCH t.courses")
+    List<Teacher> findAllTeachersWithCourses();
+
     /**
      * Trouve un enseignant par son ID.
      * Cette méthode garantit que l'objet retourné est bien un Teacher.
@@ -29,4 +33,11 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
      */
     @Query("SELECT t FROM Teacher t WHERE t.id = :id")
     Optional<Teacher> findTeacherById(Long id);
+
+    @Query("SELECT t FROM Teacher t LEFT JOIN FETCH t.courses WHERE t.id = :id")
+    Optional<Teacher> findByIdWithCourses(@Param("id") Long id);
+
+
+    @Query("SELECT t FROM Course c JOIN c.teacher t LEFT JOIN FETCH t.courses WHERE c.id = :courseId")
+    Optional<Teacher> findTeacherWithCoursesByCourseId(@Param("courseId") Long courseId);
 }

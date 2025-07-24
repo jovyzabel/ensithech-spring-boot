@@ -8,6 +8,8 @@ public interface ICourseService {
     CourseDto createCourse(CourseDto dto);
     CourseDto updateCourse(CourseDto dto);
     CourseDto getCourse(Long id);
+    CourseDto assignTeacherToCourse(Long courseId, Long teacherId);
+
     List<CourseDto> getAllCourses();
     void deleteCourse(Long id);
 }
