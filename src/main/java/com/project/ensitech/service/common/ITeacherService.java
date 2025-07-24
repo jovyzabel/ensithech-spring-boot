@@ -39,4 +39,6 @@ public interface ITeacherService {
      * @param id L'identifiant de l'enseignant à supprimer.
      */
     void deleteTeacher(Long id);
+ // Récupérer l'enseignant associer à un cours
+    TeacherDto getTeacherByCourseId(Long courseId);
 }

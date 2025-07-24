@@ -54,4 +54,9 @@ public class TeacherController {
         // ce qui est la norme pour une suppression réussie.
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<TeacherDto> getTeacherByCourse(@PathVariable Long courseId) {
+        return ResponseEntity.ok(teacherService.getTeacherByCourseId(courseId));
+    }
 }
