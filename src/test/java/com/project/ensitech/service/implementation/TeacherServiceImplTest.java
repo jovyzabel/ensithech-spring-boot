@@ -43,7 +43,7 @@ class TeacherServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        // CORRECTION : On initialise des objets de test COHÉRENTS.
+        // On initialise des objets de test COHÉRENTS.
         // L'entité et le DTO représentent le même enseignant.
         teacher = new Teacher();
         teacher.setId(teacherId);

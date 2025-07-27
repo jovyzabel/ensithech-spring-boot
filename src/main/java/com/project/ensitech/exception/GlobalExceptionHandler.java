@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * Intègre le logging avec Log4j2 pour tracer les erreurs.
  */
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends RuntimeException  {
 
     // 1. On initialise le logger Log4j2 pour cette classe.
     private static final Logger log = LogManager.getLogger(GlobalExceptionHandler.class);
