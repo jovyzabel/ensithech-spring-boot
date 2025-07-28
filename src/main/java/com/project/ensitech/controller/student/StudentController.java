@@ -17,6 +17,23 @@ public class StudentController {
 
     private final IStudentService studentService;
 
+    // ... Vos endpoints CRUD existants (POST, GET, PUT, DELETE) ...
+
+    /**
+     * Associe une liste de cours à un étudiant spécifique.
+     * @param studentId L'ID de l'étudiant.
+     * @param courseIds La liste des IDs des cours à associer.
+     * @return Le DTO de l'étudiant mis à jour.
+     */
+    @PutMapping("/{studentId}/courses")
+    public ResponseEntity<StudentDto> associateCoursesToStudent(
+            @PathVariable Long studentId,
+            @RequestBody List<Long> courseIds) {
+
+        StudentDto updatedStudent = studentService.associateCoursesToStudent(studentId, courseIds);
+        return ResponseEntity.ok(updatedStudent);
+    }
+
     @PostMapping
     public ResponseEntity<StudentDto> createStudent(@Valid @RequestBody StudentDto studentDto) {
         StudentDto createdStudent = studentService.createStudent(studentDto);
