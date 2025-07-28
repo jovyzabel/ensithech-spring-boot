@@ -1,5 +1,6 @@
 package com.project.ensitech.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.ensitech.enumeration.Gender;
 import jakarta.persistence.*;
@@ -32,10 +33,12 @@ public class Teacher extends Person {
              fetch = FetchType.LAZY
      )
     private Set<Course> courses = new HashSet<>();*/
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Course> courses;  // Un enseignant a plusieurs cours
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonManagedReference
+    @JsonIgnoreProperties("teacher") // Quand on sérialise un Course, on ignore son Teacher
 
+//    private List<Course> courses;  // Un enseignant a plusieurs cours
+    private Set<Course> courses = new HashSet<>();
     // LE CONSTRUCTEUR EXACT QUE HIBERNATE RECHERCHE
     public Teacher(Long id, String firstName, String lastName, String email, String address, String telephone, Date birthday, Gender gender, Date createdAt) {
         super(id, firstName, lastName, email, address, telephone, birthday, gender);
