@@ -42,9 +42,9 @@ public class CourseServiceImpl implements ICourseService {
                 .orElseThrow(() -> new EntityNotFoundException("Course not found with id: " + courseDto.getId()));
 
         // Update fields
-        existing.setIntitule(courseDto.getIntitule());
+        existing.setIntitule(courseDto.getTitle());
         existing.setCoefficient(courseDto.getCoefficient());
-        existing.setNombreHeures(courseDto.getNombreHeures());
+        existing.setNombreHeures(courseDto.getHours());
 
 
         System.out.println("new id "+ courseDto.getTeacherId());

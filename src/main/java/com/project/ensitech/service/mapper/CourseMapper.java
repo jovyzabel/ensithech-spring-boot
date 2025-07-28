@@ -36,15 +36,16 @@ public class CourseMapper {
 
     }
 
+
     public Course toEntity(CourseDto dto) {
         if (dto == null) {
             throw new IllegalArgumentException("DTO ne peut pas être null");
         }
         return Course.builder()
                 .id(dto.getId())
-                .intitule(dto.getIntitule())
+                .intitule(dto.getTitle())
                 .coefficient(dto.getCoefficient())
-                .nombreHeures(dto.getNombreHeures())
+                .nombreHeures(dto.getHours())
                 .build();
     }
 }

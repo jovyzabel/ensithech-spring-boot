@@ -12,9 +12,9 @@ import lombok.*;
 // Data Transfer Object
 public class CourseDto {
     private Long id;
-    private String intitule;
+    private String title; // <-- RENOMMER 'intitule' en 'title'pour la correspondance avec le front
     private Integer coefficient;
-    private Integer nombreHeures;
+    private Integer hours; // <-- RENOMMER 'nombreHeures' en 'hours' (plus court)
     private Long teacherId;
     // private TeacherDto teacher;
 }
