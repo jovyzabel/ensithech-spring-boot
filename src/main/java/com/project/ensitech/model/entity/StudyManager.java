@@ -14,5 +14,5 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true) // Important pour l'héritage !
 @DiscriminatorValue("3") // Valeur pour le StudyManager
 public class StudyManager extends Person {
-
+private String password;
 }
