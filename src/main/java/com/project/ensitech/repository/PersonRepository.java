@@ -44,8 +44,18 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
 
 
     // Pour les Étudiants
-    @Query("SELECT s FROM Student s")
-    List<Student> findAllStudents();
+//    @Query("SELECT s FROM Student s")
+//    List<Student> findAllStudents();
+
+    /**
+     * Récupère tous les étudiants en chargeant également leurs cours associés
+     * pour éviter les problèmes de LazyInitializationException.
+     * 'JOIN FETCH s.courses' est la clé : il dit à Hibernate de faire une jointure
+     * et de remplir la collection 'courses' dans la même requête.
+     * 'DISTINCT' est important pour éviter les étudiants dupliqués si un étudiant a plusieurs cours.
+     */
+    @Query("SELECT DISTINCT s FROM Student s LEFT JOIN FETCH s.courses")
+    List<Student> findAllStudentsWithCourses();
 
     @Query("SELECT s FROM Student s WHERE s.id = :id")
     Optional<Student> findStudentById(Long id);
