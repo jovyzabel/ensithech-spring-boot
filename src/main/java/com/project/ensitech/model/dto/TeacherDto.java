@@ -1,6 +1,8 @@
 package com.project.ensitech.model.dto;
 
 import com.project.ensitech.enumeration.Gender;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,8 @@ public class TeacherDto {
     private Long id; // L'identifiant unique de l'enseignant
     private String firstName;
     private  String lastName;
+    @Email(message = "Le format de l'email est invalide")
+    @NotBlank(message = "L'email est obligatoire")
     private String email;
     private String address;
     private String telephone;
