@@ -1,12 +1,12 @@
-package com.project.user_service.service.implementation;
+package com.project.ensitech.service.implementation;
 
-import com.project.user_service.exception.ResourceNotFoundException;
-import com.project.user_service.models.dto.AdministratorDto;
 
-import com.project.user_service.models.entities.Administrator;
-import com.project.user_service.repository.PersonRepository;
-import com.project.user_service.service.common.IAdministratorService;
-import com.project.user_service.service.mapper.AdministratorMapper;
+import com.project.ensitech.exception.ResourceNotFoundException;
+import com.project.ensitech.model.dto.AdministratorDto;
+import com.project.ensitech.model.entity.Administrator;
+import com.project.ensitech.repository.PersonRepository;
+import com.project.ensitech.service.common.IAdministratorService;
+import com.project.ensitech.service.mapper.AdministratorMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

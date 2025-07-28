@@ -1,8 +1,8 @@
-package com.project.user_service.controller;
+package com.project.ensitech.controller.director;
 
-import com.project.user_service.models.dto.DirectorDto;
-import com.project.user_service.service.common.IDirectorService;
 
+import com.project.ensitech.model.dto.DirectorDto;
+import com.project.ensitech.service.common.IDirectorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

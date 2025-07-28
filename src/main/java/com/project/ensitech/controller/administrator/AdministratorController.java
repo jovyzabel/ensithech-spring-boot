@@ -1,9 +1,8 @@
-package com.project.user_service.controller;
+package com.project.ensitech.controller.administrator;
 
-import com.project.user_service.models.dto.AdministratorDto;
-import com.project.user_service.models.dto.DirectorDto;
-import com.project.user_service.service.common.IAdministratorService;
-import com.project.user_service.service.common.IDirectorService;
+
+import com.project.ensitech.model.dto.AdministratorDto;
+import com.project.ensitech.service.common.IAdministratorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

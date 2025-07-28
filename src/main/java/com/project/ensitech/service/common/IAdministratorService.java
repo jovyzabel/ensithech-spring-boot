@@ -1,8 +1,8 @@
-package com.project.user_service.service.common;
+package com.project.ensitech.service.common;
 
-import com.project.user_service.models.dto.AdministratorDto;
-import com.project.user_service.models.dto.AdministratorDto;
-import com.project.user_service.models.entities.Administrator;
+
+
+import com.project.ensitech.model.dto.AdministratorDto;
 
 import java.util.List;
 

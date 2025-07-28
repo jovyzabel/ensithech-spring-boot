@@ -1,9 +1,10 @@
-package com.project.user_service.controller;
+package com.project.ensitech.controller.studyManager;
 
 
 
-import com.project.user_service.models.dto.StudyManagerDto;
-import com.project.user_service.service.common.IStudyManagerService;
+
+import com.project.ensitech.model.dto.StudyManagerDto;
+import com.project.ensitech.service.common.IStudyManagerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

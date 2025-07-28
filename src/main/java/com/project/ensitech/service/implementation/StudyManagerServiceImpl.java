@@ -1,17 +1,18 @@
-package com.project.user_service.service.implementation;
+package com.project.ensitech.service.implementation;
 
-import com.project.user_service.exception.ResourceNotFoundException;
-import com.project.user_service.models.dto.StudyManagerDto;
-import com.project.user_service.models.entities.StudyManager;
-import com.project.user_service.repository.PersonRepository;
-import com.project.user_service.service.common.IStudyManagerService;
-import com.project.user_service.service.mapper.StudyManagerMapper;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.project.ensitech.exception.ResourceNotFoundException;
+import com.project.ensitech.model.dto.StudyManagerDto;
+import com.project.ensitech.model.entity.StudyManager;
+import com.project.ensitech.repository.PersonRepository;
+import com.project.ensitech.service.common.IStudyManagerService;
+import com.project.ensitech.service.mapper.StudyManagerMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;

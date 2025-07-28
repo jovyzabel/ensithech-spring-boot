@@ -1,6 +1,7 @@
-package com.project.user_service.service.common;
+package com.project.ensitech.service.common;
 
-import com.project.user_service.models.dto.StudyManagerDto;
+
+import com.project.ensitech.model.dto.StudyManagerDto;
 
 import java.util.List;
 
