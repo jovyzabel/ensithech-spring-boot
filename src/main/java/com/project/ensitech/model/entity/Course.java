@@ -1,10 +1,16 @@
 package com.project.ensitech.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 // Modèle de base de données
 @Data
 @Entity
@@ -14,6 +20,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(exclude = {"students", "teachers"})
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +40,18 @@ public class Course {
     private Teacher teacher;*/
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", nullable = true) // Clé étrangère dans la table Cours
-    // @JsonBackReference
+
+    @JsonIgnoreProperties("courses") // Quand on sérialise un Teacher, on ignore ses cours pour éviter la boucle
     private Teacher teacher;  // Chaque cours appartient à un enseignant
+
+
+    // --- RELATION AVEC STUDENT (CORRIGÉE) ---
+    // Cette relation est le "côté inverse" de celle définie dans Student.
+    // 'mappedBy = "courses"' dit à Hibernate : "Ne crée pas de colonne ici,
+    // la gestion de cette relation (la table de jointure) est définie
+    // dans le champ 'courses' de l'entité Student".
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("courses") // Quand tu sérialises un étudiant, ignore sa liste de cours
+//    private List<Student> students;
+    private Set<Student> students = new HashSet<>();
 }
