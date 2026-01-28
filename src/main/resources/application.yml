@@ -2,7 +2,8 @@ spring:
   application:
     name: ensitech
   profiles:
-    active: dev
+    # On active le profil 'local' pour le développement en local
+    active: local
   datasource:
     url: jdbc:mysql://localhost:3307/${MYSQL_DATABASE}
     username: ${MYSQL_USER}
@@ -15,7 +16,7 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+
 
 server:
   port: 8084
